@@ -2,16 +2,23 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Project.Areas.Identity.Data;
+using Project.Models;
+
 
 namespace Project.Data;
 
 public class AuhtDbContext : IdentityDbContext<AppplicationUser>
 {
+    public AuhtDbContext()
+    {
+    }
+
     public AuhtDbContext(DbContextOptions<AuhtDbContext> options)
         : base(options)
     {
     }
-
+    public DbSet<Tasks> task { get; set; }
+    public DbSet<Projects> project { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

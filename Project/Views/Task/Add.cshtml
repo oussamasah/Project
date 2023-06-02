@@ -1,0 +1,59 @@
+﻿
+@model Project.Models.Form.TaskForm
+@{
+    var project = ViewData["projects"] as Projects;
+}
+<div class="mb-2">
+    <a class="btn btn-outline-warning " asp-area="" asp-controller="Task" asp-action="Index" asp-route-id="@project.Id"><i class="bi bi-arrow-return-left me-2"></i> Return</a>
+</div>
+
+
+<div class="row justify-content-center">
+    <form method="post" asp-action="@(Model?.Id>0 ? "Edit" : "Add")">
+        @Html.AntiForgeryToken()
+    <div class="card p-0">
+        <div class="card-header">
+
+                <h1 class="mt-3 mb-3">@(Model?.Id > 0 ? "Edit" : "Add") task in @project.Name </h1>
+        </div>
+        <div class="card-body">
+        
+           
+                <div class="form-floating mb-2">
+                    <input type="hidden" asp-for="Id"   />
+               
+                    <input type="hidden" asp-for="Project" value="@project.Id" />
+                    <input asp-for="Title" class="form-control" autocomplete="Title" aria-required="true" />
+                    <label asp-for="Title" class="form-label">Title</label>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>           
+                <div class="form-floating mb-2">
+                   
+                    <textarea asp-for="Description" class="form-control" autocomplete="Description" aria-required="true" ></textarea>
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-2">
+           
+                    <select asp-for="Priority" class="form-control" autocomplete="Priority" aria-required="true">
+                   
+                        <option value="Hight">Hight</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <label asp-for="Priority" class="form-label">Priority</label>
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+          
+        </div>
+        <div class="card-footer text-right">
+                <button type="submit" class="btn btn-dark "><i class="bi bi-box-arrow-in-down me-2"></i>@(Model?.Id > 0 ? "Edit task " : "Save task")</button>
+        </div>
+    </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
